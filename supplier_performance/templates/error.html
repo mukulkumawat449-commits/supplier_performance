@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Error{% endblock %}
+
+{% block content %}
+<section class="container py-5 text-center">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 fade-up">
+      <div class="card-glass p-5">
+        <div style="font-size:5rem; margin-bottom:16px;">⚠️</div>
+        <h2 style="font-weight:800; margin-bottom:12px; color:var(--accent3);">Something went wrong</h2>
+        <p style="color:var(--muted); font-size:.95rem; margin-bottom:24px;">{{ error }}</p>
+        <div class="d-flex gap-3 justify-content-center">
+          <a href="/" class="btn btn-grad">
+            <i class="bi bi-house me-2"></i>Go Home
+          </a>
+          <a href="javascript:history.back()" class="btn btn-outline-accent">
+            <i class="bi bi-arrow-left me-2"></i>Go Back
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

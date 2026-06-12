@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+{% block title %}Predict Supplier Performance{% endblock %}
+
+{% block content %}
+<!-- ── Hero ──────────────────────────────────────────────────────────────────── -->
+<section style="position:relative; overflow:hidden; padding: 64px 0 40px;">
+  <div class="hero-mesh"></div>
+  <div class="container position-relative">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-7 fade-up">
+        <div class="pill pill-blue mb-3">
+          <i class="bi bi-stars me-1"></i>AI-Powered · {{ best_model }}
+        </div>
+        <h1 class="section-title" style="font-size:2.4rem; line-height:1.2;">
+          Supplier Performance<br>
+          <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+            Prediction System
+          </span>
+        </h1>
+        <p class="section-sub" style="margin-bottom:0;">
+          Enter supplier attributes below to instantly predict whether a supplier is a
+          <strong style="color:#4cc9f0;">Good</strong> or
+          <strong style="color:#f72585;">Poor</strong> performer using machine learning.
+        </p>
+      </div>
+      <div class="col-lg-5 fade-up delay-1">
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="card-glass stat-card">
+              <div class="stat-val">97%</div>
+              <div class="stat-label">Model Accuracy</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card-glass stat-card">
+              <div class="stat-val">500</div>
+              <div class="stat-label">Training Records</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card-glass stat-card">
+              <div class="stat-val">4</div>
+              <div class="stat-label">Models Compared</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card-glass stat-card">
+              <div class="stat-val">15</div>
+              <div class="stat-label">Features Used</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Prediction Form ─────────────────────────────────────────────────────── -->
+<section class="container pb-5">
+  <form action="/predict" method="POST" id="predictForm">
+    <div class="row g-4">
+
+      <!-- Left: Numeric Scores -->
+      <div class="col-lg-6 fade-up delay-1">
+        <div class="card-glass p-4 h-100">
+          <h5 class="mb-4" style="font-weight:700;">
+            <i class="bi bi-sliders me-2" style="color:var(--accent);"></i>Performance Scores
+          </h5>
+
+          <!-- Financial Health Score -->
+          <div class="mb-4">
+            <label class="form-label">Financial Health Score
+              <span id="fhs-val" class="ms-2 pill pill-blue">70</span>
+            </label>
+            <input type="range" class="form-control-range w-100 mb-1" min="20" max="100" step="0.5"
+                   id="FinancialHealthScore_range" value="70"
+                   oninput="syncSlider('FinancialHealthScore',this.value)" />
+            <input type="number" class="form-control form-control-sm mt-1" name="FinancialHealthScore"
+                   id="FinancialHealthScore" value="70" min="20" max="100" step="0.5"
+                   oninput="syncRange('FinancialHealthScore',this.value)" required />
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Quality Score
+              <span id="qs-val" class="ms-2 pill pill-blue">75</span>
+            </label>
+            <input type="range" class="w-100 mb-1" min="30" max="100" step="0.5"
+                   id="QualityScore_range" value="75"
+                   oninput="syncSlider('QualityScore',this.value)" />
+            <input type="number" class="form-control form-control-sm mt-1" name="QualityScore"
+                   id="QualityScore" value="75" min="30" max="100" step="0.5"
+                   oninput="syncRange('QualityScore',this.value)" required />
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Delivery Score
+              <span id="ds-val" class="ms-2 pill pill-blue">72</span>
+            </label>
+            <input type="range" class="w-100 mb-1" min="25" max="100" step="0.5"
+                   id="DeliveryScore_range" value="72"
+                   oninput="syncSlider('DeliveryScore',this.value)" />
+            <input type="number" class="form-control form-control-sm mt-1" name="DeliveryScore"
+                   id="DeliveryScore" value="72" min="25" max="100" step="0.5"
+                   oninput="syncRange('DeliveryScore',this.value)" required />
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Compliance Score
+              <span id="cs-val" class="ms-2 pill pill-blue">80</span>
+            </label>
+            <input type="range" class="w-100 mb-1" min="40" max="100" step="0.5"
+                   id="ComplianceScore_range" value="80"
+                   oninput="syncSlider('ComplianceScore',this.value)" />
+            <input type="number" class="form-control form-control-sm mt-1" name="ComplianceScore"
+                   id="ComplianceScore" value="80" min="40" max="100" step="0.5"
+                   oninput="syncRange('ComplianceScore',this.value)" required />
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Price Competitiveness Score
+              <span id="pcs-val" class="ms-2 pill pill-blue">68</span>
+            </label>
+            <input type="range" class="w-100 mb-1" min="20" max="100" step="0.5"
+                   id="PriceCompetitivenessScore_range" value="68"
+                   oninput="syncSlider('PriceCompetitivenessScore',this.value)" />
+            <input type="number" class="form-control form-control-sm mt-1" name="PriceCompetitivenessScore"
+                   id="PriceCompetitivenessScore" value="68" min="20" max="100" step="0.5"
+                   oninput="syncRange('PriceCompetitivenessScore',this.value)" required />
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">On-Time Delivery Rate (%)
+              <span id="otdr-val" class="ms-2 pill pill-blue">85</span>
+            </label>
+            <input type="range" class="w-100 mb-1" min="50" max="100" step="0.5"
+                   id="OnTimeDeliveryRate_range" value="85"
+                   oninput="syncSlider('OnTimeDeliveryRate',this.value)" />
+            <input type="number" class="form-control form-control-sm mt-1" name="OnTimeDeliveryRate"
+                   id="OnTimeDeliveryRate" value="85" min="50" max="100" step="0.5"
+                   oninput="syncRange('OnTimeDeliveryRate',this.value)" required />
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Other inputs + Categoricals -->
+      <div class="col-lg-6 fade-up delay-2">
+        <div class="card-glass p-4 mb-4">
+          <h5 class="mb-4" style="font-weight:700;">
+            <i class="bi bi-activity me-2" style="color:var(--accent2);"></i>Operational Metrics
+          </h5>
+
+          <div class="mb-3">
+            <label class="form-label">Supplier Association Years</label>
+            <input type="number" class="form-control" name="SupplierAssociationYears"
+                   value="8" min="1" max="25" step="0.5" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Response Time (Hours)</label>
+            <input type="number" class="form-control" name="ResponseTimeHours"
+                   value="24" min="1" max="120" step="0.5" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Defect Rate (%)</label>
+            <input type="number" class="form-control" name="DefectRate"
+                   value="3" min="0" max="20" step="0.1" required />
+          </div>
+        </div>
+
+        <div class="card-glass p-4">
+          <h5 class="mb-4" style="font-weight:700;">
+            <i class="bi bi-tags me-2" style="color:var(--accent3);"></i>Supplier Attributes
+          </h5>
+
+          <div class="mb-3">
+            <label class="form-label">Location Code</label>
+            <select class="form-select" name="SupplierLocationCode" required>
+              {% for opt in location_opts %}
+              <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Supplier Category</label>
+            <select class="form-select" name="SupplierCategory" required>
+              {% for opt in category_opts %}
+              <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Supplier Distance</label>
+            <select class="form-select" name="Supplier_Distance" required>
+              {% for opt in distance_opts %}
+              <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Is Listed Company?</label>
+            <select class="form-select" name="IsSupplierListedComp" required>
+              {% for opt in listed_opts %}
+              <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Supplier Value Category</label>
+            <select class="form-select" name="SupplierValueCategory" required>
+              {% for opt in value_opts %}
+              <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-grad w-100" style="font-size:1.05rem; padding:14px;">
+            <i class="bi bi-lightning-charge-fill me-2"></i>Predict Performance
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Sync slider ↔ number input
+const labels = {
+  FinancialHealthScore: 'fhs-val',
+  QualityScore: 'qs-val',
+  DeliveryScore: 'ds-val',
+  ComplianceScore: 'cs-val',
+  PriceCompetitivenessScore: 'pcs-val',
+  OnTimeDeliveryRate: 'otdr-val',
+};
+
+function syncSlider(field, val) {
+  document.getElementById(field).value = val;
+  if (labels[field]) document.getElementById(labels[field]).textContent = parseFloat(val).toFixed(1);
+}
+function syncRange(field, val) {
+  const el = document.getElementById(field + '_range');
+  if (el) el.value = val;
+  if (labels[field]) document.getElementById(labels[field]).textContent = parseFloat(val || 0).toFixed(1);
+}
+
+// Loading state on submit
+document.getElementById('predictForm').addEventListener('submit', function () {
+  const btn = this.querySelector('button[type=submit]');
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analyzing…';
+  btn.disabled = true;
+});
+</script>
+{% endblock %}

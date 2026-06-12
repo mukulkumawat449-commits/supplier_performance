@@ -1,0 +1,174 @@
+{
+  "Logistic Regression": {
+    "accuracy": 0.97,
+    "r2": 0.8441,
+    "mae": 0.03,
+    "mse": 0.03,
+    "rmse": 0.1732,
+    "cv_mean": 0.955,
+    "cv_std": 0.015,
+    "report": {
+      "0": {
+        "precision": 0.9259259259259259,
+        "recall": 0.9615384615384616,
+        "f1-score": 0.9433962264150944,
+        "support": 26.0
+      },
+      "1": {
+        "precision": 0.9863013698630136,
+        "recall": 0.972972972972973,
+        "f1-score": 0.9795918367346939,
+        "support": 74.0
+      },
+      "accuracy": 0.97,
+      "macro avg": {
+        "precision": 0.9561136478944698,
+        "recall": 0.9672557172557172,
+        "f1-score": 0.9614940315748941,
+        "support": 100.0
+      },
+      "weighted avg": {
+        "precision": 0.9706037544393709,
+        "recall": 0.97,
+        "f1-score": 0.970180978051598,
+        "support": 100.0
+      }
+    }
+  },
+  "Decision Tree": {
+    "accuracy": 0.81,
+    "r2": 0.0125,
+    "mae": 0.19,
+    "mse": 0.19,
+    "rmse": 0.4359,
+    "cv_mean": 0.855,
+    "cv_std": 0.0408,
+    "report": {
+      "0": {
+        "precision": 0.6206896551724138,
+        "recall": 0.6923076923076923,
+        "f1-score": 0.6545454545454545,
+        "support": 26.0
+      },
+      "1": {
+        "precision": 0.8873239436619719,
+        "recall": 0.8513513513513513,
+        "f1-score": 0.8689655172413793,
+        "support": 74.0
+      },
+      "accuracy": 0.81,
+      "macro avg": {
+        "precision": 0.7540067994171928,
+        "recall": 0.7718295218295218,
+        "f1-score": 0.7617554858934169,
+        "support": 100.0
+      },
+      "weighted avg": {
+        "precision": 0.8179990286546868,
+        "recall": 0.81,
+        "f1-score": 0.8132163009404388,
+        "support": 100.0
+      }
+    }
+  },
+  "Random Forest": {
+    "accuracy": 0.9,
+    "r2": 0.4802,
+    "mae": 0.1,
+    "mse": 0.1,
+    "rmse": 0.3162,
+    "cv_mean": 0.875,
+    "cv_std": 0.0426,
+    "report": {
+      "0": {
+        "precision": 0.9444444444444444,
+        "recall": 0.6538461538461539,
+        "f1-score": 0.7727272727272727,
+        "support": 26.0
+      },
+      "1": {
+        "precision": 0.8902439024390244,
+        "recall": 0.9864864864864865,
+        "f1-score": 0.9358974358974359,
+        "support": 74.0
+      },
+      "accuracy": 0.9,
+      "macro avg": {
+        "precision": 0.9173441734417345,
+        "recall": 0.8201663201663202,
+        "f1-score": 0.8543123543123543,
+        "support": 100.0
+      },
+      "weighted avg": {
+        "precision": 0.9043360433604336,
+        "recall": 0.9,
+        "f1-score": 0.8934731934731935,
+        "support": 100.0
+      }
+    }
+  },
+  "Gradient Boosting": {
+    "accuracy": 0.95,
+    "r2": 0.7401,
+    "mae": 0.05,
+    "mse": 0.05,
+    "rmse": 0.2236,
+    "cv_mean": 0.91,
+    "cv_std": 0.0267,
+    "report": {
+      "0": {
+        "precision": 0.9565217391304348,
+        "recall": 0.8461538461538461,
+        "f1-score": 0.8979591836734694,
+        "support": 26.0
+      },
+      "1": {
+        "precision": 0.948051948051948,
+        "recall": 0.9864864864864865,
+        "f1-score": 0.9668874172185431,
+        "support": 74.0
+      },
+      "accuracy": 0.95,
+      "macro avg": {
+        "precision": 0.9522868435911914,
+        "recall": 0.9163201663201663,
+        "f1-score": 0.9324233004460063,
+        "support": 100.0
+      },
+      "weighted avg": {
+        "precision": 0.9502540937323545,
+        "recall": 0.95,
+        "f1-score": 0.9489660764968239,
+        "support": 100.0
+      }
+    }
+  },
+  "_best": "Logistic Regression",
+  "_features": [
+    "FinancialHealthScore",
+    "SupplierAssociationYears",
+    "QualityScore",
+    "DeliveryScore",
+    "ComplianceScore",
+    "PriceCompetitivenessScore",
+    "ResponseTimeHours",
+    "DefectRate",
+    "OnTimeDeliveryRate",
+    "SupplierValueCategory",
+    "SupplierLocationCode_LOC_A",
+    "SupplierLocationCode_LOC_B",
+    "SupplierLocationCode_LOC_C",
+    "SupplierLocationCode_LOC_D",
+    "SupplierLocationCode_LOC_E",
+    "SupplierCategory_Electronics",
+    "SupplierCategory_Logistics",
+    "SupplierCategory_Packaging",
+    "SupplierCategory_Raw Materials",
+    "SupplierCategory_Services",
+    "Supplier_Distance_Far",
+    "Supplier_Distance_Medium",
+    "Supplier_Distance_Near",
+    "IsSupplierListedComp_No",
+    "IsSupplierListedComp_Yes"
+  ]
+}

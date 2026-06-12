@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Prediction Result{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- Result Banner -->
+      <div class="card-glass p-5 text-center mb-4 fade-up" style="
+        {% if prediction == 1 %}
+          border-color: rgba(76,201,240,.4);
+          background: linear-gradient(135deg, rgba(76,201,240,.06), rgba(67,97,238,.08));
+        {% else %}
+          border-color: rgba(247,37,133,.4);
+          background: linear-gradient(135deg, rgba(247,37,133,.06), rgba(114,9,183,.08));
+        {% endif %}
+      ">
+        <div style="font-size:4rem; margin-bottom:12px;">
+          {% if prediction == 1 %}✅{% else %}❌{% endif %}
+        </div>
+
+        <div class="pill {% if prediction==1 %}pill-blue{% else %}pill-pink{% endif %} mb-3">
+          {{ best_model }}
+        </div>
+
+        <h2 style="font-size:2rem; font-weight:800; margin-bottom:8px;">
+          {{ label }}
+        </h2>
+
+        <p style="color:var(--muted); font-size:1rem; margin-bottom:24px;">
+          The model predicts this supplier will be a
+          <strong style="color: {% if prediction==1 %}#4cc9f0{% else %}#f72585{% endif %};">
+            {{ label_raw }} Performer
+          </strong>
+        </p>
+
+        <!-- Confidence Bar -->
+        <div class="mb-2 text-start">
+          <div class="d-flex justify-content-between mb-1">
+            <span style="font-size:.85rem; color:var(--muted);">Prediction Confidence</span>
+            <span style="font-size:.85rem; font-weight:700; font-family:'JetBrains Mono',monospace;">
+              {{ confidence }}%
+            </span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" style="width:{{ confidence }}%"></div>
+          </div>
+        </div>
+
+        <!-- Good/Poor Probability -->
+        <div class="row g-3 mt-2">
+          <div class="col-6">
+            <div style="padding:14px; border-radius:12px; background:rgba(76,201,240,.08); border:1px solid rgba(76,201,240,.2);">
+              <div style="font-size:1.6rem; font-weight:700; font-family:'JetBrains Mono',monospace; color:#4cc9f0;">
+                {{ proba_good }}%
+              </div>
+              <div style="font-size:.8rem; color:var(--muted);">GOOD PERFORMER</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div style="padding:14px; border-radius:12px; background:rgba(247,37,133,.08); border:1px solid rgba(247,37,133,.2);">
+              <div style="font-size:1.6rem; font-weight:700; font-family:'JetBrains Mono',monospace; color:#f72585;">
+                {{ proba_poor }}%
+              </div>
+              <div style="font-size:.8rem; color:var(--muted);">POOR PERFORMER</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Summary Table -->
+      <div class="card-glass p-4 mb-4 fade-up delay-1">
+        <h5 class="mb-3" style="font-weight:700;">
+          <i class="bi bi-table me-2" style="color:var(--accent);"></i>Input Summary
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-dark table-borderless table-sm">
+            <tbody>
+              {% for key, val in form_data.items() %}
+              <tr>
+                <td style="color:var(--muted); width:55%;">{{ key | replace('_',' ') }}</td>
+                <td style="font-family:'JetBrains Mono',monospace; font-size:.9rem;">
+                  {{ val[0] if val is iterable and val is not string else val }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="d-flex gap-3 fade-up delay-2">
+        <a href="/" class="btn btn-grad flex-fill text-center">
+          <i class="bi bi-arrow-repeat me-2"></i>New Prediction
+        </a>
+        <a href="/visuals" class="btn btn-outline-accent flex-fill text-center">
+          <i class="bi bi-bar-chart-line me-2"></i>View Charts
+        </a>
+        <a href="/metrics" class="btn btn-outline-accent flex-fill text-center">
+          <i class="bi bi-clipboard-data me-2"></i>Metrics
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}Model Metrics{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <div class="fade-up">
+    <div class="pill pill-blue mb-3"><i class="bi bi-clipboard-data me-1"></i>Evaluation</div>
+    <h2 class="section-title">Model Evaluation Metrics</h2>
+    <p class="section-sub">Comprehensive performance metrics for all trained classifiers. Best model: <strong style="color:var(--accent);">{{ best_model }}</strong></p>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-5 fade-up delay-1">
+    {% for name, m in metrics.items() %}
+    <div class="col-md-6 col-xl-3">
+      <div class="card-glass p-4 h-100 {% if name == best_model %}best-card{% endif %}"
+           style="{% if name == best_model %}border-color:rgba(67,97,238,.6);box-shadow:0 0 24px rgba(67,97,238,.15);{% endif %}">
+
+        {% if name == best_model %}
+        <div class="pill pill-blue mb-2" style="font-size:.7rem;">
+          <i class="bi bi-trophy-fill me-1"></i>BEST MODEL
+        </div>
+        {% endif %}
+
+        <h6 style="font-weight:700; color:var(--text); margin-bottom:16px; font-size:.95rem;">{{ name }}</h6>
+
+        <div class="row g-2">
+          <div class="col-6">
+            <div style="background:rgba(67,97,238,.08); border-radius:10px; padding:10px; text-align:center;">
+              <div style="font-size:1.2rem; font-weight:700; font-family:'JetBrains Mono',monospace; color:#7b9bf5;">
+                {{ (m.accuracy * 100) | round(1) }}%
+              </div>
+              <div style="font-size:.7rem; color:var(--muted);">Accuracy</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div style="background:rgba(114,9,183,.08); border-radius:10px; padding:10px; text-align:center;">
+              <div style="font-size:1.2rem; font-weight:700; font-family:'JetBrains Mono',monospace; color:#c77dff;">
+                {{ (m.cv_mean * 100) | round(1) }}%
+              </div>
+              <div style="font-size:.7rem; color:var(--muted);">CV Acc</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div style="background:rgba(247,37,133,.08); border-radius:10px; padding:10px; text-align:center;">
+              <div style="font-size:1.1rem; font-weight:700; font-family:'JetBrains Mono',monospace; color:#ff85a1;">
+                {{ m.mae }}
+              </div>
+              <div style="font-size:.7rem; color:var(--muted);">MAE</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div style="background:rgba(76,201,240,.08); border-radius:10px; padding:10px; text-align:center;">
+              <div style="font-size:1.1rem; font-weight:700; font-family:'JetBrains Mono',monospace; color:#4cc9f0;">
+                {{ m.rmse }}
+              </div>
+              <div style="font-size:.7rem; color:var(--muted);">RMSE</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="d-flex justify-content-between mb-1" style="font-size:.78rem;">
+            <span style="color:var(--muted);">R² Score</span>
+            <span style="font-family:'JetBrains Mono',monospace;">{{ m.r2 }}</span>
+          </div>
+          <div class="progress" style="height:5px;">
+            <div class="progress-bar" style="width:{{ [m.r2 * 100, 0] | max }}%"></div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-2 mb-1" style="font-size:.78rem;">
+            <span style="color:var(--muted);">MSE</span>
+            <span style="font-family:'JetBrains Mono',monospace;">{{ m.mse }}</span>
+          </div>
+
+          <div class="d-flex justify-content-between mt-1 mb-1" style="font-size:.78rem;">
+            <span style="color:var(--muted);">CV Std Dev</span>
+            <span style="font-family:'JetBrains Mono',monospace;">±{{ m.cv_std }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Classification Reports -->
+  <h4 class="mb-4 fade-up" style="font-weight:700;">
+    <i class="bi bi-file-text me-2" style="color:var(--accent2);"></i>Classification Reports
+  </h4>
+
+  {% for name, m in metrics.items() %}
+  <div class="card-glass p-4 mb-4 fade-up delay-1">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h6 style="font-weight:700; margin:0;">{{ name }}</h6>
+      {% if name == best_model %}
+      <span class="pill pill-blue"><i class="bi bi-trophy-fill me-1"></i>Best</span>
+      {% endif %}
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-dark table-sm table-borderless">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1-Score</th>
+            <th>Support</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cls in ['0', '1'] %}
+          {% if cls in m.report %}
+          <tr>
+            <td>
+              {% if cls == '1' %}
+              <span class="pill pill-blue" style="font-size:.7rem;">Good (1)</span>
+              {% else %}
+              <span class="pill pill-pink" style="font-size:.7rem;">Poor (0)</span>
+              {% endif %}
+            </td>
+            <td style="font-family:'JetBrains Mono',monospace;">{{ (m.report[cls].precision * 100) | round(1) }}%</td>
+            <td style="font-family:'JetBrains Mono',monospace;">{{ (m.report[cls].recall * 100) | round(1) }}%</td>
+            <td style="font-family:'JetBrains Mono',monospace;">{{ (m.report[cls]['f1-score'] * 100) | round(1) }}%</td>
+            <td style="font-family:'JetBrains Mono',monospace;">{{ m.report[cls].support | int }}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          <tr style="border-top:1px solid var(--border);">
+            <td style="color:var(--muted); font-size:.82rem;">Weighted Avg</td>
+            <td style="font-family:'JetBrains Mono',monospace;">{{ (m.report['weighted avg'].precision * 100) | round(1) }}%</td>
+            <td style="font-family:'JetBrains Mono',monospace;">{{ (m.report['weighted avg'].recall * 100) | round(1) }}%</td>
+            <td style="font-family:'JetBrains Mono',monospace;">{{ (m.report['weighted avg']['f1-score'] * 100) | round(1) }}%</td>
+            <td style="font-family:'JetBrains Mono',monospace;">{{ m.report['weighted avg'].support | int }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endfor %}
+
+</section>
+{% endblock %}

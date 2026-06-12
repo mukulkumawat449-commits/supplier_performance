@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Visualizations{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <div class="fade-up">
+    <div class="pill pill-purple mb-3"><i class="bi bi-bar-chart-line me-1"></i>Data Analysis</div>
+    <h2 class="section-title">Charts & Visualizations</h2>
+    <p class="section-sub">Insights generated from the Supplier Performance dataset using Matplotlib & Seaborn.</p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- Correlation Heatmap -->
+    <div class="col-lg-8 fade-up delay-1">
+      <div class="card-glass p-4 h-100">
+        <h6 class="mb-1" style="font-weight:700;">
+          <i class="bi bi-grid-3x3 me-2" style="color:var(--accent);"></i>Feature Correlation Heatmap
+        </h6>
+        <p style="font-size:.82rem; color:var(--muted); margin-bottom:16px;">
+          Shows linear relationships between numeric features. Red = positive, blue = negative correlation.
+        </p>
+        <img src="/static/images/heatmap.png" class="img-fluid rounded-3" alt="Heatmap" style="border:1px solid var(--border);" />
+      </div>
+    </div>
+
+    <!-- Target Distribution -->
+    <div class="col-lg-4 fade-up delay-2">
+      <div class="card-glass p-4 h-100">
+        <h6 class="mb-1" style="font-weight:700;">
+          <i class="bi bi-pie-chart me-2" style="color:var(--accent3);"></i>Target Distribution
+        </h6>
+        <p style="font-size:.82rem; color:var(--muted); margin-bottom:16px;">
+          Distribution of Good vs Poor performers in the training dataset.
+        </p>
+        <img src="/static/images/target_dist.png" class="img-fluid rounded-3" alt="Target Distribution" style="border:1px solid var(--border);" />
+      </div>
+    </div>
+
+    <!-- Model Comparison -->
+    <div class="col-lg-6 fade-up delay-1">
+      <div class="card-glass p-4 h-100">
+        <h6 class="mb-1" style="font-weight:700;">
+          <i class="bi bi-trophy me-2" style="color:#ffd700;"></i>Model Comparison
+        </h6>
+        <p style="font-size:.82rem; color:var(--muted); margin-bottom:16px;">
+          Test accuracy vs cross-validation accuracy across all trained models.
+        </p>
+        <img src="/static/images/model_comparison.png" class="img-fluid rounded-3" alt="Model Comparison" style="border:1px solid var(--border);" />
+      </div>
+    </div>
+
+    <!-- Confusion Matrix -->
+    <div class="col-lg-6 fade-up delay-2">
+      <div class="card-glass p-4 h-100">
+        <h6 class="mb-1" style="font-weight:700;">
+          <i class="bi bi-grid me-2" style="color:var(--accent2);"></i>Confusion Matrix – {{ best_model }}
+        </h6>
+        <p style="font-size:.82rem; color:var(--muted); margin-bottom:16px;">
+          True positives, false positives, true negatives, and false negatives for the best model.
+        </p>
+        <img src="/static/images/confusion_matrix.png" class="img-fluid rounded-3" alt="Confusion Matrix" style="border:1px solid var(--border);" />
+      </div>
+    </div>
+
+    <!-- Feature Importance -->
+    <div class="col-lg-6 fade-up delay-1">
+      <div class="card-glass p-4 h-100">
+        <h6 class="mb-1" style="font-weight:700;">
+          <i class="bi bi-sort-down me-2" style="color:var(--accent3);"></i>Feature Importance (Random Forest)
+        </h6>
+        <p style="font-size:.82rem; color:var(--muted); margin-bottom:16px;">
+          Top features that most influence supplier performance prediction.
+        </p>
+        <img src="/static/images/feature_importance.png" class="img-fluid rounded-3" alt="Feature Importance" style="border:1px solid var(--border);" />
+      </div>
+    </div>
+
+    <!-- CV Scores -->
+    <div class="col-lg-6 fade-up delay-2">
+      <div class="card-glass p-4 h-100">
+        <h6 class="mb-1" style="font-weight:700;">
+          <i class="bi bi-arrow-repeat me-2" style="color:var(--success);"></i>Cross-Validation Scores
+        </h6>
+        <p style="font-size:.82rem; color:var(--muted); margin-bottom:16px;">
+          5-Fold CV accuracy with standard deviation error bars for each model.
+        </p>
+        <img src="/static/images/cv_scores.png" class="img-fluid rounded-3" alt="CV Scores" style="border:1px solid var(--border);" />
+      </div>
+    </div>
+
+    <!-- Distributions -->
+    <div class="col-12 fade-up delay-1">
+      <div class="card-glass p-4">
+        <h6 class="mb-1" style="font-weight:700;">
+          <i class="bi bi-graph-up me-2" style="color:var(--accent);"></i>Feature Distributions by Performance Class
+        </h6>
+        <p style="font-size:.82rem; color:var(--muted); margin-bottom:16px;">
+          Histogram + KDE for key numeric features, split by Good (blue) vs Poor (pink) performers.
+        </p>
+        <img src="/static/images/distributions.png" class="img-fluid rounded-3" alt="Distributions" style="border:1px solid var(--border);" />
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

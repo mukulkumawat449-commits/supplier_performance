@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <div class="fade-up">
+        <div class="pill pill-purple mb-3"><i class="bi bi-info-circle me-1"></i>About</div>
+        <h2 class="section-title">About This Project</h2>
+        <p class="section-sub">
+          
+        </p>
+      </div>
+
+      <!-- Project Overview -->
+      <div class="card-glass p-4 mb-4 fade-up delay-1">
+        <h5 style="font-weight:700; margin-bottom:16px;">
+          <i class="bi bi-lightbulb me-2" style="color:#ffd700;"></i>Project Overview
+        </h5>
+        <p style="color:var(--muted); line-height:1.7;">
+          <strong style="color:#4cc9f0;">Good Performer</strong> 
+          <strong style="color:#f72585;">Poor Performer</strong>.
+        </p>
+        <p style="color:var(--muted); line-height:1.7; margin-top:12px;">
+          
+        </p>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="card-glass p-4 mb-4 fade-up delay-2">
+        <h5 style="font-weight:700; margin-bottom:20px;">
+          <i class="bi bi-stack me-2" style="color:var(--accent);"></i>Technology Stack
+        </h5>
+        <div class="row g-3">
+          {% set tech = [
+            ('bi-server', 'Flask', 'Web framework for serving predictions', 'pill-blue'),
+            ('bi-table', 'Pandas / NumPy', 'Data manipulation & numerical computing', 'pill-purple'),
+            ('bi-diagram-3', 'Scikit-Learn', 'Machine learning models & preprocessing', 'pill-pink'),
+            ('bi-graph-up', 'Matplotlib / Seaborn', 'Data visualizations & charts', 'pill-blue'),
+            ('bi-save', 'Joblib', 'Model serialization & persistence', 'pill-purple'),
+            ('bi-bootstrap', 'Bootstrap 5', 'Responsive UI framework', 'pill-pink'),
+          ] %}
+          {% for icon, name, desc, pill in tech %}
+          <div class="col-sm-6">
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div style="width:38px; height:38px; border-radius:10px; background:rgba(67,97,238,.12);
+                          display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <i class="bi {{ icon }}" style="color:var(--accent); font-size:1.1rem;"></i>
+              </div>
+              <div>
+                <div style="font-weight:600; font-size:.92rem;">{{ name }}</div>
+                <div style="font-size:.8rem; color:var(--muted);">{{ desc }}</div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- ML Pipeline -->
+      <div class="card-glass p-4 mb-4 fade-up delay-1">
+        <h5 style="font-weight:700; margin-bottom:20px;">
+          <i class="bi bi-cpu me-2" style="color:var(--accent2);"></i>ML Pipeline
+        </h5>
+        <div class="row g-0">
+          {% set steps = [
+            ('1', 'Data Loading', 'Load SupplierPerformance.xlsx using Pandas'),
+            ('2', 'Missing Value Handling', 'Mean imputation for numerical, mode for categorical'),
+            ('3', 'Encoding', 'OneHotEncoder for nominals, OrdinalEncoder for SupplierValueCategory'),
+            ('4', 'Scaling', 'StandardScaler normalizes all features to zero mean & unit variance'),
+            ('5', 'Train-Test Split', '80/20 stratified split with random_state=123'),
+            ('6', 'Model Training', '4 classifiers trained & compared via 5-fold cross-validation'),
+            ('7', 'Evaluation', 'Accuracy, R², MAE, MSE, RMSE, F1, Confusion Matrix'),
+            ('8', 'Serving', 'Best model served via Flask REST API'),
+          ] %}
+          {% for num, title, desc in steps %}
+          <div class="d-flex gap-3 mb-3 align-items-start">
+            <div style="min-width:28px; height:28px; border-radius:50%; background:var(--grad);
+                        display:flex; align-items:center; justify-content:center;
+                        font-size:.75rem; font-weight:700; flex-shrink:0;">{{ num }}</div>
+            <div>
+              <div style="font-weight:600; font-size:.92rem; margin-bottom:2px;">{{ title }}</div>
+              <div style="font-size:.82rem; color:var(--muted);">{{ desc }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- How to Run -->
+      <div class="card-glass p-4 fade-up delay-2">
+        <h5 style="font-weight:700; margin-bottom:16px;">
+          <i class="bi bi-terminal me-2" style="color:var(--accent3);"></i>How to Run
+        </h5>
+        <pre style="background:rgba(0,0,0,.3); border-radius:12px; padding:18px; font-family:'JetBrains Mono',monospace;
+                    font-size:.82rem; color:#4cc9f0; border:1px solid var(--border); overflow-x:auto;"># 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Train the model (generates charts + saves model)
+python train_model.py
+
+# 3. Run the Flask app
+python app.py
+
+# 4. Open in browser
+#    http://localhost:5000</pre>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
